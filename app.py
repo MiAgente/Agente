@@ -6,9 +6,12 @@
 import streamlit as st
 from pymongo import MongoClient, errors
 
+# Leer URL de MongoDB desde secretos
+mongo_url = st.secrets["mongo_url"]
+
 # Intentar conectar a MongoDB
 try:
-    client = MongoClient("mongodb+srv://mhuaman:0AcY7h5YMFqWCvRS@innova.gfmnmzd.mongodb.net/?retryWrites=true&w=majority&appName=Innova")
+    client = MongoClient(mongo_url)
     db = client["mhuaman"]
     collection = db["tb_tiendas"]
     st.success("Conexión a MongoDB exitosa")
@@ -39,5 +42,6 @@ if st.button("Buscar"):
             st.error("No se encontró ninguna tienda con el idCodigo proporcionado.")
     else:
         st.error("Por favor, ingrese un idCodigo.")
+
 
 
