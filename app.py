@@ -3,17 +3,19 @@
 #pip install streamlit pymongo
 #cd \Globokas\ScoringPython
 
-
 import streamlit as st
 from pymongo import MongoClient, errors
 
+# Obtener la URL de MongoDB desde los secretos configurados en Streamlit Sharing
+mongo_url = st.secrets["mongo"]["url"]
+
 # Intentar conectar a MongoDB
 try:
-    client = MongoClient("mongodb+srv://mhuaman:0AcY7h5YMFqWCvRS@innova.gfmnmzd.mongodb.net/?retryWrites=true&w=majority&appName=Innova")
+    client = MongoClient(mongo_url)
     db = client["mhuaman"]
     collection = db["tb_tiendas"]
     st.success("Conexión a MongoDB exitosa")
-except errors.ConnectionError:
+except errors.ServerSelectionTimeoutError:
     st.error("No se pudo conectar a MongoDB. Verifique la URL y las credenciales.")
     st.stop()  # Detiene la ejecución del script si no se puede conectar
 
@@ -40,3 +42,4 @@ if st.button("Buscar"):
             st.error("No se encontró ninguna tienda con el idCodigo proporcionado.")
     else:
         st.error("Por favor, ingrese un idCodigo.")
+
