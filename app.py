@@ -6,8 +6,8 @@
 import streamlit as st
 from pymongo import MongoClient, errors
 
-# Leer URL de MongoDB desde secretos
-mongo_url = st.secrets["mongo_url"]
+# Acceder a los secretos configurados en Streamlit Sharing
+mongo_url = st.secrets["mongo"]
 
 # Intentar conectar a MongoDB
 try:
